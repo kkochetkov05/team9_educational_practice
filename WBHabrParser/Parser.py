@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import datetime as dt
 
 session = requests.Session()
 
@@ -32,13 +33,14 @@ else:
         for p in products:
             item = {
                 "id" : p.get('id'),
-                "brand" : p.get('brand'),
+                "name": p.get('name'),
                 "brandId": p.get('brandId'),
-                "name" : p.get('name'),
+                "brand" : p.get('brand'),
                 "entity": p.get('entity'),
                 "reviewRating": p.get('reviewRating'),
                 "basicPrice" : p.get('sizes')[0].get('price').get('basic')/100,
-                "actualPrice": p.get('sizes')[0].get('price').get('product')/100
+                "actualPrice": p.get('sizes')[0].get('price').get('product')/100,
+                "date": dt.date.today()
             }
             items.append(item)
         df = pd.DataFrame(items)
