@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 # --- Настройки ---
-NM_LIST_FILE = "../team9_educational_practice/nm_list.txt"   # файл с артиклями (по одному nmId на строку)
+NM_LIST_FILE = "nm_list.txt"  # файл с артиклями (по одному nmId на строку)
 OUT_CSV = "wb_products.csv"
 ENDPOINTS = [
     "https://card.wb.ru/cards/v2/detail",

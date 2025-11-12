@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 # --- Настройки ---
-NM_LIST_FILE = "../team9_educational_practice/nm_list.txt"   # список артикулов по одному на строку
+NM_LIST_FILE = "nm_list.txt"  # список артикулов по одному на строку
 OUT_CSV = "wb_products_full2.csv"
 RETRY = 2
 RETRY_DELAY = 1
