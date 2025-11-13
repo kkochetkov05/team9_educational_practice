@@ -1,3 +1,7 @@
+# надо нам
+headers.py
+.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -25,7 +29,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-headers.py
+
 
 
 # PyInstaller
