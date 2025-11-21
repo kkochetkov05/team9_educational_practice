@@ -12,3 +12,9 @@ brands_urls = {
     'https://www.wildberries.ru/brands/askona-46721',
     'https://www.wildberries.ru/brands/9752-omsa'
 }
+
+# brands_urls = {
+#     "https://www.wildberries.ru/brands/310727110-meviar-kids",
+#     "https://www.wildberries.ru/brands/310922246-deniman",
+#     "https://www.wildberries.ru/brands/zlatek"
+# }
