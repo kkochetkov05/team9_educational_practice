@@ -4,6 +4,8 @@ import datetime as dt
 from time import sleep
 from pathlib import Path
 import sys
+from random import uniform
+from fake_useragent import UserAgent
 
 def get_brand_url(brand_name: str) -> str:
     url = f"https://static-basket-01.wbbasket.ru/vol0/data/brands/{brand_name}.json"
@@ -34,8 +36,23 @@ def bruteforce_429(url: str):
         status_code = response.status_code
     return response
 
+# def get_headers(ua):
+#     headers = {
+#         'User-Agent': f'{ua.random}',
+#         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+#         'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7'
+#     }
+#     response = session.get("https://www.wildberries.ru", headers=headers)
+#     cookies = session.cookies
+#     print(cookies)
+#     # headers = {
+#     #     'User-Agent': f'{ua.random}',
+#     #     'Cookie' : f''
+#     # }
+
 def parse(brands: tuple):
     items = []
+    req_count = 0
     for brand in brands:
         # формирование ссылки обращения на первую страницу каталога
         brand_url_head, brand_url_tail, brand_name = get_brand_url(brand)
@@ -45,9 +62,16 @@ def parse(brands: tuple):
 
         page = 0
         while True:
+            req_count += 1
+            if req_count > 5:
+                from headers import headers
+                # get_headers(ua, session)
+                req_count = 0
+
             page += 1
             brand_url = brand_url_head + str(page) + brand_url_tail
 
+            sleep(uniform(0.001, 0.01))
             response = session.get(brand_url)
             if response.status_code == 429:
                 response = bruteforce_429(brand_url)
@@ -83,11 +107,11 @@ def parse(brands: tuple):
                 break
 
         print(f'Парсинг магазина "{brand_name}" закончен')
-        sleep(3)
+        sleep(1)
 
     print("Парсинг закончен. Загрузка в файл")
     df = pd.DataFrame(items)
-    data_file = Path(__file__).parent.parent / 'data' / f"{dt.date.today()}_data.csv"
+    data_file = Path(__file__).parent.parent / 'data' / f"{dt.date.today()}_data_test.csv"
     df.to_csv(data_file, index=False)
 
 if __name__ == "__main__":
@@ -96,9 +120,11 @@ if __name__ == "__main__":
 
     # Создание сессии
     session = requests.Session()
+    # ua = UserAgent()
+    # headers = get_headers(ua)
     from headers import headers
     session.headers.update(headers)
 
-    # brands = ('yunichel', 'tvoe')
-    from brands import brands
+    brands = ('befree', 'tvoe')
+    # from brands import brands
     parse(brands)
