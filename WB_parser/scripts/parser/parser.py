@@ -19,13 +19,14 @@ def bruteforce_429(url: str):
 
 # Функция для парсинга
 def parse():
+    print("Подготовка. Окно браузера сейчас закроется")
     from get_headers import headers
     session.headers.update(headers)
 
     # Получаем список названий и реквест-ссылок на магазины
     from get_brands_request_urls import brands, get_brands_request_urls
 
-    brands = ('sela', 'tvoe')
+    # brands = ('sela', 'tvoe')
     brands_request_urls = get_brands_request_urls(brands, session)
 
     items = []

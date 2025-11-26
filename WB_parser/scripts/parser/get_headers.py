@@ -6,13 +6,14 @@ from time import sleep
 from fake_useragent import UserAgent
 
 options = Options()
-options.add_argument('--start-maximized')
+options.add_argument('--window-size=800,600')
 options.add_argument('--disable-blink-features=AutomationControlled')
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 driver.get('https://www.wildberries.ru')
-sleep(5)
+while driver.get_cookies() == []:
+    sleep(1)
 
 cookies = driver.get_cookies()
 driver.close()
