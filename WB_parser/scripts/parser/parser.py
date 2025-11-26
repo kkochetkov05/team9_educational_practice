@@ -84,7 +84,7 @@ def parse():
 
     print("Парсинг закончен. Загрузка в файл")
     df = pd.DataFrame(items)
-    data_file = Path(__file__).parent.parent.parent / 'data' / 'raw_data' / f"{date.today()}_data_test.csv"
+    data_file = Path(__file__).parent.parent.parent / 'data' / 'raw_data' / f"{date.today()}_data.csv"
     df.to_csv(data_file, index=False)
     print(f"Данные сохранены в файл {data_file}")
 
