@@ -6,6 +6,7 @@ from time import sleep
 from pathlib import Path
 from random import uniform
 
+# Функция для брутфорса 429 ошибки (лимит запросов)
 def bruteforce_429(url: str):
     # print("Код ошибки 429, ограничение по количеству запросов, подождите")
     # print("...")
@@ -16,6 +17,7 @@ def bruteforce_429(url: str):
         status_code = response.status_code
     return response
 
+# Функция для парсинга
 def parse():
     from get_headers import headers
     session.headers.update(headers)
