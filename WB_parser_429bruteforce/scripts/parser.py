@@ -111,7 +111,7 @@ def parse(brands: tuple):
 
     print("Парсинг закончен. Загрузка в файл")
     df = pd.DataFrame(items)
-    data_file = Path(__file__).parent.parent / 'data' / f"{dt.date.today()}_data_test.csv"
+    data_file = Path(__file__).parent.parent / 'data' / f"{dt.date.today()}_data.csv"
     df.to_csv(data_file, index=False)
 
 if __name__ == "__main__":
@@ -125,6 +125,6 @@ if __name__ == "__main__":
     from headers import headers
     session.headers.update(headers)
 
-    brands = ('befree', 'tvoe')
-    # from brands import brands
+    # brands = ('befree', 'tvoe')
+    from brands import brands
     parse(brands)
