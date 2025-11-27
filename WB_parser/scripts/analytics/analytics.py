@@ -101,7 +101,7 @@ def analytics(num_anal):
         data_date, target_date = date()
 
         while True:
-            entity = input("Введите название категории, для которой хотите получить среднюю цену: ").strip().lower()
+            entity = input("Введите название категории, для которой хотите получить среднюю цену (или нажмите enter, чтобы пропустить): ").strip().lower()
             if entity == "":
                 break
             elif entity not in uniq_entity:
@@ -138,7 +138,7 @@ def analytics(num_anal):
         data["entity"] = data["entity"].astype(str).str.lower().str.strip()
 
         while True:
-            entity = input("Введите название категории, для которой хотите получить среднюю цену: ").strip().lower()
+            entity = input("Введите название категории, для которой хотите получить динамику цен и количества товаров: ").strip().lower()
             if entity == "":
                 break
             elif entity not in uniq_entity:
