@@ -52,23 +52,39 @@ if "date" not in data.columns:
     raise ValueError("В данных нет колонки 'date'. Проверить формат входных CSV.")
 
 def date():
-    print(f"Доступные даты: {data['date'].unique()}")
+    uniq_date = data['date'].unique()
+    print(f"Доступные даты: {uniq_date}")
     target_date = input("Введите дату (YYYY-MM-DD): ").strip()
+    while target_date not in uniq_date:
+        print(f"Нет данных за {target_date}. Доступные даты: {uniq_date}")
+        target_date = input("Введите дату (YYYY-MM-DD): ").strip()
     data_date = data[data["date"] == target_date].copy()
-    if data_date.empty:
-        raise ValueError(f"Нет данных за {target_date}. Доступные даты: {data['date'].unique()}")
+
     return data_date, target_date
 
 def analytics(num_anal):
 
     if num_anal == 1:
         # --- Аналитика количества товаров по категориям ---
+        uniq_entity = data["entity"].unique()
         data_date, target_date = date()
         data_date["entity"] = data_date["entity"].astype(str).str.lower().str.strip()
         category_counts = data_date["entity"].value_counts()
 
+        while True:
+            entity = input("Введите название категории, для которой хотите получить количество товаров (или нажмите enter, чтобы пропустить): ").strip().lower()
+            if entity == "":
+                break
+            elif entity not in uniq_entity:
+                print(f"Данная категория отсутствует, доступные категории: {uniq_entity}")
+            else:
+                break
+
         print(f"\nКоличество товаров по категориям за {target_date}:")
         print(category_counts)
+
+        if entity != "":
+            print(f"Количество товаров для категории '{entity}': {category_counts(entity)}")
 
         top = 20
         # График
@@ -83,20 +99,26 @@ def analytics(num_anal):
 
     elif num_anal == 2:
         # --- Аналитика средних цен по категориям ---
+        uniq_entity = data["entity"].unique()
         data_date, target_date = date()
-        entity = input("Введите название категории, для которой хотите получить среднюю цену: ")
-        # Получаем список доступных категорий
-        available_categories = data["entity"].unique()
-        if entity not in available_categories:
-            print(f"Категория '{entity}' не найдена в данных.")
-            return
+
+        while True:
+            entity = input("Введите название категории, для которой хотите получить среднюю цену: ").strip().lower()
+            if entity == "":
+                break
+            elif entity not in uniq_entity:
+                print(f"Данная категория отсутствует, доступные категории: {uniq_entity}")
+            else:
+                break
+
         # Группировка
         avg_prices = data_date.groupby("entity")[["basicPrice", "actualPrice"]].mean().sort_values("actualPrice",
                                                                                                    ascending=False)
         print("\nСредние цены по категориям:")
         print(avg_prices)
 
-        print(f"Средняя цена для категории {entity}: ", avg_prices.loc[entity, "actualPrice"])
+        if entity != "":
+            print(f"Средняя цена для категории '{entity}': ", avg_prices.loc[entity, "actualPrice"])
 
         # --- График средних цен ---
         top = 20
@@ -111,19 +133,20 @@ def analytics(num_anal):
 
     elif num_anal == 3:
         # --- Аналитика динамики цен и количества товаров по дням для категории ---
+        uniq_entity = data["entity"].unique()
         print("\n=== Аналитика динамики цен по дням ===")
 
         # Нормализуем названия категорий
         data["entity"] = data["entity"].astype(str).str.lower().str.strip()
 
-        # Получаем список доступных категорий
-        available_categories = data["entity"].unique()
-
-        entity = input("Введите название категории для анализа динамики цен: ").strip().lower()
-
-        if entity not in available_categories:
-            print(f"Категория '{entity}' не найдена в данных.")
-            return
+        while True:
+            entity = input("Введите название категории, для которой хотите получить среднюю цену: ").strip().lower()
+            if entity == "":
+                break
+            elif entity not in uniq_entity:
+                print(f"Данная категория отсутствует, доступные категории: {uniq_entity}")
+            else:
+                break
 
         # Фильтруем данные по выбранной категории
         category_data = data[data["entity"] == entity].copy()
@@ -153,8 +176,6 @@ def analytics(num_anal):
 
         # Создаем subplot для цен
         plt.subplot(2, 1, 1)
-        plt.plot(daily_prices.index, daily_prices["basicPrice"],
-                 marker='o', linewidth=2, label='Basic Price', color='blue')
         plt.plot(daily_prices.index, daily_prices["actualPrice"],
                  marker='s', linewidth=2, label='Actual Price', color='red')
         plt.title(f'Динамика цен для категории "{entity}"')
@@ -288,6 +309,8 @@ def analytics(num_anal):
 
     else:
         print(f"Аналитика №{num_anal} не найдена. Доступные варианты: 1, 2, 3, 4, 5")
+        num_analyt = input("Введите номер аналитики, которую хотите получить: ")
+        analytics(int(num_analyt))
 
 
 analytics(int(num_analytics))
