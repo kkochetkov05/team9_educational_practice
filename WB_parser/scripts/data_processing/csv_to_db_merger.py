@@ -78,8 +78,8 @@ def merge(csv_files):
 
     print(f"Merge complete! Database saved as: {db_file}")
 
-    for file in csv_files:
-        file.unlink()
+    # for file in csv_files:
+    #     file.unlink()
 
 
 # if __name__ == '__main__':

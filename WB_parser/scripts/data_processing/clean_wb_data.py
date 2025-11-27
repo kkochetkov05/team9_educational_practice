@@ -136,7 +136,7 @@ def main():
     for csv_file in csv_files:
         print(f"\nОбрабатываю: {csv_file.name}")
         clean_wb_data(str(csv_file))
-        csv_file.unlink()
+        # csv_file.unlink()
 
 # if __name__ == "__main__":
 main()
