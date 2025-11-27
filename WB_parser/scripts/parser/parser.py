@@ -1,7 +1,6 @@
 import requests
 import pandas as pd
 from datetime import date
-import datetime as dt
 from time import sleep
 from pathlib import Path
 from random import uniform
@@ -19,6 +18,7 @@ def bruteforce_429(url: str):
 
 # Функция для парсинга
 def parse():
+
     print("Подготовка. Окно браузера сейчас закроется")
     from get_headers import headers
     session.headers.update(headers)
@@ -57,7 +57,7 @@ def parse():
 
             for p in products:
                 item = {
-                    "date": dt.date.today(),
+                    "date": date.today(),
                     "id": p.get('id'),
                     "name": p.get('name'),
                     "brandId": p.get('brandId'),
@@ -76,7 +76,7 @@ def parse():
 
             if page % 10 == 0:
                 print(f'{page} страниц')
-            if products == []:
+            if not products:
                 break
         print(f'{page} страниц')
         print(f'Парсинг магазина "{brand.get('name')}" закончен')
@@ -88,7 +88,8 @@ def parse():
     df.to_csv(data_file, index=False)
     print(f"Данные сохранены в файл {data_file}")
 
-if __name__ == "__main__":
+if __name__ == "main.py":
+
     # Создание сессии
     session = requests.Session()
 

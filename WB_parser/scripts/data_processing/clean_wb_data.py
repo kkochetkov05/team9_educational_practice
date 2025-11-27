@@ -1,10 +1,9 @@
 import pandas as pd
-import os
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw_data"
-CLEAN_DATA_DIR = PROJECT_ROOT / "data" / "clear_data"
+CLEAN_DATA_DIR = PROJECT_ROOT / "data" / "clean_data"
 
 def is_file_already_cleaned(raw_file_path):
     """
@@ -114,7 +113,7 @@ def clean_wb_data(input_file, output_file=None):
         if output_file is None:
             input_filename = Path(input_file).name
             # Файлы сохраняются в WB_parser/data/clear_data/
-            output_file = CLEAN_DATA_DIR / f"cleaned_{input_filename}"
+            output_file = CLEAN_DATA_DIR / f"{(input_filename.split('.'))[0]}_cleaned.csv"
 
         df_filtered.to_csv(output_file, index=False)
         print(f"Очищенные данные сохранены в: {output_file}")
@@ -137,6 +136,7 @@ def main():
     for csv_file in csv_files:
         print(f"\nОбрабатываю: {csv_file.name}")
         clean_wb_data(str(csv_file))
+        csv_file.unlink()
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+main()
