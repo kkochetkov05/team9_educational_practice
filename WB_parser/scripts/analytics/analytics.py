@@ -2,8 +2,6 @@ import matplotlib
 matplotlib.use("TkAgg")
 import pandas as pd
 import matplotlib.pyplot as plt
-import glob
-import os
 from pathlib import Path
 
 '''
@@ -16,7 +14,7 @@ from pathlib import Path
 '''
 
 # Путь к данным относительно расположения скрипта
-DATA_DIR = Path(__file__).parent.parent.parent / "data" / "raw_data"  # На один уровень выше, потом папка data
+DATA_DIR = Path(__file__).parent.parent.parent / "data" / "raw_data"
 
 print("Доступные аналитики: \n1 - Количество товаров по категориям \n2 - Средние цены по категориям \n3 - Динамика цен и количество товаров по дням для категории \n4 - Количество товаров по компаниям \n5 - Средние цены по компаниям")
 num_analytics = input("Введите номер аналитики, которую хотите получить: ")

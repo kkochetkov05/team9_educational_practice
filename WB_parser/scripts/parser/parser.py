@@ -6,6 +6,7 @@ from time import sleep
 from pathlib import Path
 from random import uniform
 
+# Функция для брутфорса 429 ошибки (лимит запросов)
 def bruteforce_429(url: str):
     # print("Код ошибки 429, ограничение по количеству запросов, подождите")
     # print("...")
@@ -16,14 +17,16 @@ def bruteforce_429(url: str):
         status_code = response.status_code
     return response
 
+# Функция для парсинга
 def parse():
+    print("Подготовка. Окно браузера сейчас закроется")
     from get_headers import headers
     session.headers.update(headers)
 
     # Получаем список названий и реквест-ссылок на магазины
     from get_brands_request_urls import brands, get_brands_request_urls
 
-    brands = ('sela', 'tvoe')
+    # brands = ('sela', 'tvoe')
     brands_request_urls = get_brands_request_urls(brands, session)
 
     items = []
@@ -81,7 +84,7 @@ def parse():
 
     print("Парсинг закончен. Загрузка в файл")
     df = pd.DataFrame(items)
-    data_file = Path(__file__).parent.parent.parent / 'data' / 'raw_data' / f"{date.today()}_data_test.csv"
+    data_file = Path(__file__).parent.parent.parent / 'data' / 'raw_data' / f"{date.today()}_data.csv"
     df.to_csv(data_file, index=False)
     print(f"Данные сохранены в файл {data_file}")
 
