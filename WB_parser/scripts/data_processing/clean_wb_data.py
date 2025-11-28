@@ -1,25 +1,7 @@
 import pandas as pd
-from pathlib import Path
 
 from config import *
 
-
-# def is_file_already_cleaned(raw_file_path):
-#     """
-#     Проверяет, был ли уже очищен файл
-#     """
-#     raw_filename = Path(raw_file_path).name
-#     cleaned_file_path = CLEAN_DATA_DIR / f"cleaned_{raw_filename}"
-#
-#     if cleaned_file_path.exists():
-#         raw_mtime = Path(raw_file_path).stat().st_mtime
-#         clean_mtime = cleaned_file_path.stat().st_mtime
-#
-#         if clean_mtime > raw_mtime:
-#             print(f"Файл уже очищен: {cleaned_file_path.name}")
-#             return True
-#
-#     return False
 def clean_wb_data(input_file, output_file=None):
     """
     Очищает данные Wildberries: удаляет ненужные категории и строки с NaN
