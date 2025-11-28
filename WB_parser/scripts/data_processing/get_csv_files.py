@@ -1,7 +1,5 @@
 import pandas as pd
-from pathlib import Path
-
-table_name = "wildberries_data"
+from config import table_name
 
 def get_csv_files(csv_folder, conn):
     # with open(merged_days_path, 'r', encoding='utf-8') as f:

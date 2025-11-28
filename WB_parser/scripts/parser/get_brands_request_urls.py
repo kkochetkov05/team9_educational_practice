@@ -1,8 +1,7 @@
-from pathlib import Path
 import json
+from config import *
 
-brands_urls_file = Path(__file__).parent.parent.parent / 'sources' / 'brands_urls.json'
-with open(brands_urls_file, 'r', encoding='utf-8') as f:
+with open(BRANDS_URLS_PATH, 'r', encoding='utf-8') as f:
     brands_urls = json.load(f)
 
 # Достать названия брендов из ссылок на их главную страницу

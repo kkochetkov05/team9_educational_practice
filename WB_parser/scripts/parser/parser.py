@@ -2,8 +2,9 @@ import requests
 import pandas as pd
 from datetime import date
 from time import sleep
-from pathlib import Path
 from random import uniform
+
+from config import *
 
 # Функция для брутфорса 429 ошибки (лимит запросов)
 def bruteforce_429(url: str, session):
@@ -28,10 +29,10 @@ def parse():
     # Получаем список названий и реквест-ссылок на магазины
     from get_brands_request_urls import brands, get_brands_request_urls
 
-    print(f"Парсинг магазинов {brands}")
-
     # brands = ('sela', 'tvoe')
     brands_request_urls = get_brands_request_urls(brands, session)
+
+    print(f"Парсинг магазинов {[brand.get('name') for brand in brands_request_urls]}")
 
     items = []
     for brand in brands_request_urls:
@@ -88,14 +89,14 @@ def parse():
 
     print("Парсинг закончен. Загрузка в файл")
     df = pd.DataFrame(items)
-    data_file = Path(__file__).parent.parent.parent / 'data' / 'raw_data' / f"{date.today()}_data.csv"
+    data_file = RAW_DATA_DIR / f"{date.today()}_data.csv"
     df.to_csv(data_file, index=False)
     print(f"Данные сохранены в файл {data_file}\n")
 
-if __name__ == "main.py":
+if __name__ == '__main__':
 
     # Создание сессии
     session = requests.Session()
 
     # Парсинг
-    parse(session)
+    parse()

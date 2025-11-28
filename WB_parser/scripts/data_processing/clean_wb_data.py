@@ -1,10 +1,8 @@
 import pandas as pd
 from pathlib import Path
 
+from config import *
 
-PROJECT_ROOT = Path(__file__).parent.parent.parent
-RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw_data"
-CLEAN_DATA_DIR = PROJECT_ROOT / "data" / "clean_data"
 
 # def is_file_already_cleaned(raw_file_path):
 #     """
@@ -146,7 +144,7 @@ def clean_main(conn):
             clean_wb_data(str(csv_file))
         csv_files_to_delete = csv_files
     if csv_files_to_delete:
-        print("Удалить файл(ы) с необработанной информацией?")
+        print("Удалить файл(ы) с необработанными данными?")
         print("y/n")
         inp = input()
         while inp != 'y' and inp != 'n':
