@@ -1,3 +1,4 @@
 # team9_educational_practice
 
-чтобы запустить парсер или обработку данных, запускайте файл main.py в папке scripts
+взаимодействие с программой происходит через файл
+WB_parser/scripts/main.py
