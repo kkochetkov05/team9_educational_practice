@@ -15,7 +15,7 @@ def extract_brand_names(brand_urls):
 brands = extract_brand_names(brands_urls)
 
 # Сформировать ссылки для реквеста
-def get_brands_request_urls(brands: list, session) -> list:
+def get_brands_request_urls(brands, session):
     brands_request_urls = []
     for brand_name in brands:
         url = f"https://static-basket-01.wbbasket.ru/vol0/data/brands/{brand_name}.json"

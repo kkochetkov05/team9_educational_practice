@@ -1,26 +1,27 @@
 import pandas as pd
 from pathlib import Path
 
+
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw_data"
 CLEAN_DATA_DIR = PROJECT_ROOT / "data" / "clean_data"
 
-def is_file_already_cleaned(raw_file_path):
-    """
-    Проверяет, был ли уже очищен файл
-    """
-    raw_filename = Path(raw_file_path).name
-    cleaned_file_path = CLEAN_DATA_DIR / f"cleaned_{raw_filename}"
-
-    if cleaned_file_path.exists():
-        raw_mtime = Path(raw_file_path).stat().st_mtime
-        clean_mtime = cleaned_file_path.stat().st_mtime
-
-        if clean_mtime > raw_mtime:
-            print(f"Файл уже очищен: {cleaned_file_path.name}")
-            return True
-
-    return False
+# def is_file_already_cleaned(raw_file_path):
+#     """
+#     Проверяет, был ли уже очищен файл
+#     """
+#     raw_filename = Path(raw_file_path).name
+#     cleaned_file_path = CLEAN_DATA_DIR / f"cleaned_{raw_filename}"
+#
+#     if cleaned_file_path.exists():
+#         raw_mtime = Path(raw_file_path).stat().st_mtime
+#         clean_mtime = cleaned_file_path.stat().st_mtime
+#
+#         if clean_mtime > raw_mtime:
+#             print(f"Файл уже очищен: {cleaned_file_path.name}")
+#             return True
+#
+#     return False
 def clean_wb_data(input_file, output_file=None):
     """
     Очищает данные Wildberries: удаляет ненужные категории и строки с NaN
@@ -89,9 +90,9 @@ def clean_wb_data(input_file, output_file=None):
     }
 
     try:
-        if is_file_already_cleaned(input_file):
-            print(f"Пропускаем уже очищенный файл: {Path(input_file).name}")
-            return None
+        # if is_file_already_cleaned(input_file):
+        #     print(f"Пропускаем уже очищенный файл: {Path(input_file).name}")
+        #     return None
 
         df = pd.read_csv(input_file)
 
@@ -123,20 +124,41 @@ def clean_wb_data(input_file, output_file=None):
     except FileNotFoundError:
         print(f"Файл {input_file} не найден!")
         return None
-def main():
+
+def clean_main(conn):
     """
      Обрабатывает все CSV файлы в папке raw_data
      """
+    print(f"\nОчистка данных из {RAW_DATA_DIR}")
+    # print(f"Исходные данные: {RAW_DATA_DIR}")
+    # print(f"Выходные данные: {CLEAN_DATA_DIR}")
 
-    print(f"Исходные данные: {RAW_DATA_DIR}")
-    print(f"Выходные данные: {CLEAN_DATA_DIR}")
+    from get_csv_files import get_csv_files
+    csv_files, available_days, merged_days = get_csv_files(RAW_DATA_DIR, conn)
 
-    csv_files = list(RAW_DATA_DIR.glob("*.csv"))
+    if not csv_files:
+        print(f"Все данные уже очищены или их нет в директории {RAW_DATA_DIR}")
+        csv_files_to_delete = list(RAW_DATA_DIR.glob("*.csv"))
 
-    for csv_file in csv_files:
-        print(f"\nОбрабатываю: {csv_file.name}")
-        clean_wb_data(str(csv_file))
-        # csv_file.unlink()
+    else:
+        for csv_file in csv_files:
+            print(f"\nОбрабатываю: {csv_file.name}")
+            clean_wb_data(str(csv_file))
+        csv_files_to_delete = csv_files
+    if csv_files_to_delete:
+        print("Удалить файл(ы) с необработанной информацией?")
+        print("y/n")
+        inp = input()
+        while inp != 'y' and inp != 'n':
+            print("y/n")
+            inp = input()
+        if inp == 'y':
+            for csv_file in csv_files_to_delete:
+                csv_file.unlink()
+        elif inp == 'n':
+            pass
 
-# if __name__ == "__main__":
-main()
+if __name__ == "__main__":
+    from db_connection_init import get_connection
+    conn = get_connection()
+    clean_main(conn)
