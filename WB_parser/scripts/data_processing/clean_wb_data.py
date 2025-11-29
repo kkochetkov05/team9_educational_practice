@@ -7,23 +7,25 @@ def clean_wb_data(input_file, output_file=None):
     """
     Очищает данные Wildberries: удаляет ненужные категории и строки с NaN
     """
-
-    with open(LIGHT_INDUSTRY_CATEGORIES_PATH, 'r', encoding='utf-8') as f:
-        categories = json.load(f)
-
     try:
-        # if is_file_already_cleaned(input_file):
-        #     print(f"Пропускаем уже очищенный файл: {Path(input_file).name}")
-        #     return None
+        with open(LIGHT_INDUSTRY_CATEGORIES_PATH, 'r', encoding='utf-8') as f:
+            categories = json.load(f)
+    except:
+        categories = []
 
-        df = pd.read_csv(input_file)
+    # if is_file_already_cleaned(input_file):
+    #     print(f"Пропускаем уже очищенный файл: {Path(input_file).name}")
+    #     return None
 
-        print(f"Обработка файла: {input_file}")
-        print(f"Исходное количество строк: {len(df):,}")
+    df = pd.read_csv(input_file)
 
-        # Удаление строк с NaN значениями
-        df_clean = df.dropna()
+    print(f"Обработка файла: {input_file}")
+    print(f"Исходное количество строк: {len(df):,}")
 
+    # Удаление строк с NaN значениями
+    df_clean = df.dropna()
+
+    if categories:
         # Фильтрация по нужным категориям
         df_filtered = df_clean[df_clean['entity'].isin(categories)]
 
@@ -32,20 +34,18 @@ def clean_wb_data(input_file, output_file=None):
 
         print(f"Удалено строк: {removed_count:,}")
         print(f"Осталось строк: {len(df_filtered):,}")
+    else:
+        df_filtered = df_clean
 
-        if output_file is None:
-            input_filename = Path(input_file).name
-            # Файлы сохраняются в WB_parser/data/clear_data/
-            output_file = CLEAN_DATA_DIR / f"{(input_filename.split('.'))[0]}_cleaned.csv"
+    if output_file is None:
+        input_filename = Path(input_file).name
+        # Файлы сохраняются в WB_parser/data/clear_data/
+        output_file = CLEAN_DATA_DIR / f"{(input_filename.split('.'))[0]}_cleaned.csv"
 
-        df_filtered.to_csv(output_file, index=False)
-        print(f"Очищенные данные сохранены в: {output_file}")
+    df_filtered.to_csv(output_file, index=False)
+    print(f"Очищенные данные сохранены в: {output_file}")
 
-        return df_filtered
-
-    except FileNotFoundError:
-        print(f"Файл {input_file} не найден!")
-        return None
+    return df_filtered
 
 def clean_main(conn):
     """
