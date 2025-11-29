@@ -74,7 +74,7 @@ WB_parser/
 1. При запуске парсера и обработки сырые данные сохраняются в папку `WB_parser/data/raw_temp_data` в `.csv` формате, затем обрабатываются и заносятся в базу данных `WB_parser/data/sql_database/wildberries_data.db`.
 2. При запуске одного парсера сырые данные сохраняются в папку `WB_parser/data/raw_temp_data` в `.csv` формате.
 3. При запуске одной обработки сырые `.csv` данные из `WB_parser/data/raw_temp_data` очистятся от ненужных категорий, NaN'ов, переместятся в `WB_parser/data/clean_temp_data`, затем загрузятся в базу данных `WB_parser/data/sql_database/wildberries_data.db`.
-4. При запуске аналитики можно загрузить всю основную аналитику в папку `WB_parser/data/analytics_output/basic_analytics` в формате `.pdf` по каждому дню отдельно или загрузить аналитику по всему временному периоду по одной категории.
+4. При запуске аналитики можно загрузить всю основную аналитику в папку `WB_parser/data/analytics_output/basic_analytics` в формате `.pdf` по каждому дню отдельно или загрузить в `WB_parser/data/analytics_output/user_request_analytics` аналитику по всему временному периоду по выбраной категории в формате `jpg`.
 
 - # Команда
 1. **Кочетков Кирилл** - разработка архитектуры, парсера.
