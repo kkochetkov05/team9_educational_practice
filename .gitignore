@@ -1,7 +1,7 @@
 # надо нам
 headers.py
 #.csv
-backup/
+backup_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
