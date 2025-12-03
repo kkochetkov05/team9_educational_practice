@@ -1,5 +1,8 @@
+"""
+Скрипт инициализирует подключение к базе данных
+"""
+
 import sqlite3
-from pathlib import Path
 
 from config import DB_PATH
 _conn = None

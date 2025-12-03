@@ -1,5 +1,6 @@
 from pathlib import Path
 
+# Пути к файлам окружения
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw_temp_data"
 CLEAN_DATA_DIR = PROJECT_ROOT / "data" / "clean_temp_data"

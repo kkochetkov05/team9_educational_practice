@@ -1,3 +1,7 @@
+"""
+Скрипт достает все значения категорий из .csv файла.
+"""
+
 import pandas as pd
 from pathlib import Path
 

@@ -1,5 +1,6 @@
 from pathlib import Path
 
+# Пути к файлам окружения
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 DB_PATH = PROJECT_ROOT / 'data' / 'sql_database' / 'wildberries_data.db'
 OUTPUT_BASE = PROJECT_ROOT / 'data' / "analytics_output"

@@ -1,12 +1,14 @@
+"""
+Скрипт очищает данные от ненужных категорий, NaN'ов,
+затем сохраняет в CLEAN_DATA_DIR (см. config.py).
+"""
+
 import pandas as pd
 import json
 
 from config import *
 
 def clean_wb_data(input_file, output_file=None):
-    """
-    Очищает данные Wildberries: удаляет ненужные категории и строки с NaN
-    """
     try:
         with open(LIGHT_INDUSTRY_CATEGORIES_PATH, 'r', encoding='utf-8') as f:
             categories = json.load(f)

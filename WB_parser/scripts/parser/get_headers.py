@@ -1,3 +1,14 @@
+"""
+Скрипт выполняет функцию получения headers для создания сессии, чтобы сайт дал доступ
+Минимальный набор параметров в headers для доступа: User-Agent и Cookie
+
+С помощью библиотеки Selenium мы обращаемся на главную страницу маркетплейса
+через браузер chrome и получаем актуальное значение Cookie
+
+С помощью библиотеки fake_useragent мы генерируем подходящий User-Agent
+"""
+
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager

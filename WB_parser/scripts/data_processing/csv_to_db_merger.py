@@ -1,3 +1,7 @@
+"""
+Скрипт добавляет очищенные данные в базу данных.
+"""
+
 import pandas as pd
 from config import *
 

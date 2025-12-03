@@ -1,3 +1,13 @@
+"""
+Скрипт выполняет функцию парсинга данных
+
+- parse() формирует request-ссылку из полученных из get_brands_request_urls.py частей.
+После обращается по ней, получает .json файл с нужной информацией,
+затем переносит нужную информацию в словарь.
+После обработки всех товаров сохраняет .csv данные в RAW_DATA_DIR (см. config.py).
+"""
+
+
 import requests
 import pandas as pd
 from datetime import date
